@@ -14,7 +14,7 @@ const AddValue: FC<InternalProps> = ({ observableSet }) => {
       }}
     >
       <input value={str} onChange={({ target: { value } }) => setStr(value)} />
-      <button type="submit">Add Value</button>
+      <button type='submit'>Add Value</button>
     </form>
   )
 }

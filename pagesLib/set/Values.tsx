@@ -10,8 +10,7 @@ const Values = reactObserver<InternalProps>((observe, { observableSet }) => {
   return (
     <>
       {valuesArr.length > 0
-        ? (
-            valuesArr.map((value) => (
+        ? valuesArr.map((value) => (
           <Fragment key={value}>
             <button
               onClick={() => {
@@ -25,12 +24,8 @@ const Values = reactObserver<InternalProps>((observe, { observableSet }) => {
             </button>{' '}
             {value}
             <br />
-          </Fragment>
-            ))
-          )
-        : (
-        <i>No Values</i>
-          )}
+          </Fragment>))
+        : <i>No Values</i>}
     </>
   )
 })

@@ -2,10 +2,12 @@
   "root": true,
   "extends": [
     "standard-with-typescript",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
+    "standard-jsx"
   ],
   "ignorePatterns": [
-    "/dist"
+    "/dist",
+    "/storybook-static"
   ],
   "parserOptions": {
     "project": "./tsconfig.json"

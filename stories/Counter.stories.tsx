@@ -1,11 +1,11 @@
 import React from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import _Counter from '../pagesLib/Counter'
+import CounterComponent from '../pagesLib/Counter'
 
-const componentMeta: ComponentMeta<typeof _Counter> = {
-  component: _Counter
+const componentMeta: ComponentMeta<typeof CounterComponent> = {
+  component: CounterComponent
 }
 
 export default componentMeta
 
-export const Counter: ComponentStory<typeof _Counter> = () => <_Counter />
+export const Counter: ComponentStory<typeof CounterComponent> = () => <CounterComponent />
