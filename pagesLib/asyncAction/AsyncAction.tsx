@@ -1,12 +1,14 @@
 import { useState } from 'react'
-import FailableResult from '../../lib/failableResult/FailableResult'
+import createFromPromise from '../../lib/observablePromise/createFromPromise'
+import ObservablePromise from '../../lib/observablePromise/ObservablePromise'
 import create from '../../lib/observableValue/create'
 import getObserve from '../../lib/observableValue/getObserve'
 import set from '../../lib/observableValue/set'
 import reactObserver from '../../lib/reactObserver/reactObserver'
+import ObservablePromiseComponent from './observablePromiseComponent/ObservablePromiseComponent'
 import Props from './Props'
 
-const observableResult = create<FailableResult<number> | undefined>(undefined)
+const observableResult = create<ObservablePromise<number> | undefined>(undefined)
 
 const AsyncAction = reactObserver<Props>((observe, { delay }) => {
   const [succeed, setSucceed] = useState(true)
@@ -14,19 +16,15 @@ const AsyncAction = reactObserver<Props>((observe, { delay }) => {
   const result = observe(getObserve(observableResult))
 
   const fetch = (): void => {
-    setTimeout(() => {
-      /* eslint-disable @typescript-eslint/indent */
-      set(observableResult, succeed
-        ? {
-          success: true,
-          result: Math.random()
+    set(observableResult, createFromPromise(new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (succeed) {
+          resolve(Math.random())
+        } else {
+          reject(new Error('Supposed to fail'))
         }
-        : {
-          success: false,
-          result: new Error('Failed')
-        })
-      /* eslint-enable @typescript-eslint/indent */
-    }, delay)
+      }, delay)
+    })))
   }
 
   return (
@@ -39,26 +37,19 @@ const AsyncAction = reactObserver<Props>((observe, { delay }) => {
           onChange={({ target: { checked } }) => setSucceed(checked)}
         />
       </label>
-      <br /><button onClick={fetch}>{result === undefined ? 'Fetch' : 'Fetch Again'}</button>
+      <br />
+      <button onClick={fetch}>{result === undefined ? 'Fetch' : 'Fetch Again'}</button>
+      <button
+        onClick={() => {
+          set(observableResult, undefined)
+        }}
+      >
+        Reset
+      </button>
       {result !== undefined && (
         <>
           <br />
-          {result.success
-            ? (
-              <>
-                Result: {result.result}
-              </>)
-            : (
-              <>
-                Error <button onClick={fetch}>Retry</button>
-              </>)}
-          <button
-            onClick={() => {
-              set(observableResult, undefined)
-            }}
-          >
-            Reset
-          </button>
+          <ObservablePromiseComponent observablePromise={result} retry={fetch} />
         </>)}
     </>
   )
