@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "module": "CommonJS",
+    "declaration": true,
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "jsx": "preserve",
+    "noEmit": true
+  }
+}

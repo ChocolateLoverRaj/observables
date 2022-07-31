@@ -1,0 +1,57 @@
+name: Test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Repo
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.16"
+      - name: Setup Pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: "6.7"
+          run_install: true
+      - name: Run Lint
+        run: pnpm lint
+  check_types:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Repo
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.16"
+      - name: Setup Pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: "6.7"
+          run_install: true
+      - name: Check Types
+        run: pnpm check-types
+  check_spelling:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Repo
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.16"
+      - name: Setup Pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: "6.7"
+          run_install: true
+      - name: Check Spelling
+        run: pnpm check-spelling

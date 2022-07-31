@@ -1,0 +1,13 @@
+{
+  "root": true,
+  "extends": [
+    "standard-with-typescript",
+    "plugin:storybook/recommended"
+  ],
+  "ignorePatterns": [
+    "/dist"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}

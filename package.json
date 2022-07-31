@@ -1,0 +1,53 @@
+{
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "lint": "eslint .",
+    "check-types": "tsc",
+    "check-spelling": "cspell ** --gitignore --no-progress",
+    "storybook": "start-storybook",
+    "build-storybook": "build-storybook"
+  },
+  "private": true,
+  "name": "observables",
+  "version": "1.0.0",
+  "homepage": "https://github.com/ChocolateLoverRaj/observables#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChocolateLoverRaj/observables.git"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.9",
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-interactions": "^6.5.9",
+    "@storybook/addon-links": "^6.5.9",
+    "@storybook/builder-webpack4": "^6.5.9",
+    "@storybook/manager-webpack4": "^6.5.9",
+    "@storybook/react": "^6.5.9",
+    "@storybook/testing-library": "^0.0.13",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "babel-loader": "^8.2.5",
+    "cspell": "^6.5.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "22.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-storybook": "^0.6.1",
+    "storybook-dark-mode": "^1.1.0",
+    "typescript": "^4.7.4"
+  },
+  "main": "dist/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "dependencies": {
+    "@utilityjs/use-force-rerender": "1.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "set-diffs": "1.0.1"
+  },
+  "author": {
+    "name": "Rajas Paranjpe",
+    "url": "https://github.com/ChocolateLoverRaj"
+  }
+}
