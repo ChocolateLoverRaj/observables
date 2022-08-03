@@ -8,7 +8,8 @@ const componentMeta: ComponentMeta<typeof AsyncActionComponent> = {
 
 export default componentMeta
 
-const Template: ComponentStory<typeof AsyncActionComponent> = args => <AsyncActionComponent {...args} />
+const Template: ComponentStory<typeof AsyncActionComponent> = args =>
+  <AsyncActionComponent {...args} />
 
 export const AsyncAction = Template.bind({})
 AsyncAction.args = {

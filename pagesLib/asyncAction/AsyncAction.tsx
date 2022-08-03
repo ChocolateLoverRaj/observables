@@ -7,6 +7,7 @@ import set from '../../lib/observableValue/set'
 import reactObserver from '../../lib/reactObserver/reactObserver'
 import ObservablePromiseComponent from './observablePromiseComponent/ObservablePromiseComponent'
 import Props from './Props'
+import wait from 'wait'
 
 const observableResult = create<ObservablePromise<number> | undefined>(undefined)
 
@@ -16,15 +17,14 @@ const AsyncAction = reactObserver<Props>((observe, { delay }) => {
   const result = observe(getObserve(observableResult))
 
   const fetch = (): void => {
-    set(observableResult, createFromPromise(new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (succeed) {
-          resolve(Math.random())
-        } else {
-          reject(new Error('Supposed to fail'))
-        }
-      }, delay)
-    })))
+    set(observableResult, createFromPromise((async () => {
+      await wait(delay)
+      if (succeed) {
+        return (Math.random())
+      } else {
+        throw new Error('Supposed to fail')
+      }
+    })()))
   }
 
   return (

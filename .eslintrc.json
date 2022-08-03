@@ -3,7 +3,8 @@
   "extends": [
     "standard-with-typescript",
     "plugin:storybook/recommended",
-    "standard-jsx"
+    "standard-jsx",
+    "plugin:react-hooks/recommended"
   ],
   "ignorePatterns": [
     "/dist",
@@ -11,5 +12,11 @@
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
+  },
+  "rules": {
+    "max-len": [
+      "error",
+      100
+    ]
   }
 }
