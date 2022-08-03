@@ -3,12 +3,12 @@ import Observable from '../../Observable'
 import Listener from '../../Listener'
 import ChangeEvent from '../ChangeEvent'
 import ChangeEventType from '../ChangeEventType'
-import emit from '../../emit/emit'
+import wrapGetObservable from '../../wrapGetObservable/wrapGetObservable'
 
 const has = <T>(
   {
     setFns: { has: setFnsHas },
-    data: { set, listeners: setListeners }
+    data: { set, listeners }
   }: ObservableSet<T, any>,
   value: T
 ): Observable<boolean> => {
@@ -17,31 +17,20 @@ const has = <T>(
       data: set,
       value
     })
-
-  const listeners = new Set<Listener<[]>>()
-  const setListener: Listener<[ChangeEvent<T>]> = (event) => {
-    if (event.type === ChangeEventType.CLEAR ? has() : event.value === value) {
-      emit({ forEach: Set.prototype.forEach.bind(listeners), inputs: [] })
-    }
-  }
-
-  return {
+  return wrapGetObservable({
     getValue: has,
-    addRemove: {
-      add: (listener) => {
-        if (listeners.size === 0) {
-          setListeners.add(setListener)
-        }
-        listeners.add(listener)
-      },
-      remove: (listener) => {
-        listeners.delete(listener)
-        if (listeners.size === 0) {
-          setListener.bind(setListener)
+    getInternalObserve: triggerUpdate => {
+      const internalListener: Listener<[ChangeEvent<T>]> = (event) => {
+        if (event.type === ChangeEventType.CLEAR ? has() : event.value === value) {
+          triggerUpdate()
         }
       }
+      return {
+        add: Set.prototype.add.bind(listeners, internalListener),
+        remove: Set.prototype.delete.bind(listeners, internalListener)
+      }
     }
-  }
+  })
 }
 
 export default has

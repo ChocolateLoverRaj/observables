@@ -18,12 +18,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
+    "@react-hook/latest": "^1.0.3",
     "@storybook/addon-actions": "^6.5.9",
     "@storybook/addon-essentials": "^6.5.9",
     "@storybook/addon-interactions": "^6.5.9",
     "@storybook/addon-links": "^6.5.9",
-    "@storybook/builder-webpack4": "^6.5.9",
-    "@storybook/manager-webpack4": "^6.5.9",
+    "@storybook/builder-webpack5": "^6.5.9",
+    "@storybook/manager-webpack5": "^6.5.9",
     "@storybook/react": "^6.5.9",
     "@storybook/testing-library": "^0.0.13",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
@@ -38,14 +39,19 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.6.1",
     "storybook-dark-mode": "^1.1.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "use-constant": "^1.1.0",
+    "wait": "^0.4.2",
+    "webpack": "^5.74.0"
   },
   "main": "dist/index.js",
   "types": "./dist/esm/index.d.ts",
   "dependencies": {
     "@utilityjs/use-force-rerender": "1.0.0",
+    "never": "^1.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "set-diffs": "1.0.1"

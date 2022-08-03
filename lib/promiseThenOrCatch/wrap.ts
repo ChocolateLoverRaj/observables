@@ -1,11 +1,11 @@
-import ThenOrCatchResult from './ThenOrCatchResult'
+import FailableResult from '../failableResult/FailableResult'
 
 /**
  * Let's you await promises without using a catch urself
  */
-const wrap = async <T>(promise: PromiseLike<T>): Promise<ThenOrCatchResult<T>> =>
+const wrap = async <T>(promise: PromiseLike<T>): Promise<FailableResult<T>> =>
   await promise.then(
-    result => ({ successful: true, result }),
-    result => ({ successful: false, result }))
+    result => ({ success: true, result }),
+    result => ({ success: false, result }))
 
 export default wrap
