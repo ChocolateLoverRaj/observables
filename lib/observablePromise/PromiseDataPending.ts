@@ -1,6 +1,6 @@
-interface PromiseDataPending<T> {
+interface PromiseDataPending {
   done: false
-  value: Promise<T>
+  result: undefined
 }
 
 export default PromiseDataPending

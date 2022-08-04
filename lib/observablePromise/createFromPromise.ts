@@ -8,12 +8,12 @@ import PromiseData from './PromiseData'
 const createFromPromise = <T>(promise: Promise<T>): ObservablePromise<T> => {
   const observableValue = create<PromiseData<T>>({
     done: false,
-    value: promise
+    result: undefined
   })
   promiseThenOrCatch(promise, result => {
     set(observableValue, {
       done: true,
-      value: result
+      result
     })
   })
   return getObserve(observableValue)

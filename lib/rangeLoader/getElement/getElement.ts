@@ -15,10 +15,7 @@ const getElement = <T>(
         if (!promiseData.done) {
           return {
             done: false,
-            value: (async () => {
-              await promiseData.value
-              return getGapArrayElement({ gapArray: loaded, index }).getValue()
-            })()
+            result: undefined
           }
         } else {
           return promiseData as PromiseDataDone<any>
@@ -26,7 +23,7 @@ const getElement = <T>(
       } else {
         return {
           done: true,
-          value: {
+          result: {
             success: true,
             result: observe(getGapArrayElement({ gapArray: loaded, index }))
           }

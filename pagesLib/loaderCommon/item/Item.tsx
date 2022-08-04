@@ -8,7 +8,7 @@ const Item = reactObserver<Props>((observe, { item, index }) => {
   return (
     <li>
       {promiseData.done
-        ? <PromiseDone failableResult={promiseData.value} index={index} />
+        ? <PromiseDone failableResult={promiseData.result} index={index} />
         : 'Loading'}
     </li>
   )
