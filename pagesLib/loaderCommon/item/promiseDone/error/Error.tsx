@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react'
-import retry from '../../../../../../lib/rangeLoader/retry/retry'
-import Context from '../../../../Context'
+import retry from '../../../../../lib/rangeLoader/retry/retry'
+import Context from '../../../Context'
 import Props from './Props'
 
 const Error: FC<Props> = ({ index }) => {

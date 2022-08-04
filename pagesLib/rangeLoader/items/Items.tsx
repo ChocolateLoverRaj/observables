@@ -2,8 +2,8 @@ import { ReactElement, useContext } from 'react'
 import getElement from '../../../lib/rangeLoader/getElement/getElement'
 import getLength from '../../../lib/rangeLoader/getLength'
 import reactObserver from '../../../lib/reactObserver/reactObserver'
-import Context from '../Context'
-import Item from './item/Item'
+import Context from '../../loaderCommon/Context'
+import Item from '../../loaderCommon/item/Item'
 
 const Items = reactObserver(observe => {
   const rangeLoader = useContext(Context)

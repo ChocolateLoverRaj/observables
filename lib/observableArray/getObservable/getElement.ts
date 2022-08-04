@@ -11,8 +11,13 @@ const getElement = <T>({ observableArray: { array, listeners }, index }: Input<T
     getInternalObserve: triggerUpdate => {
       const listener: Listener<[Event<T>]> = ({ type, data }) => {
         if (type === EventType.SPLICE &&
-             index >= data.start &&
-            (index < data.start + data.deleteCount)) {
+            // Indexes before start won't be affected
+            index >= data.start &&
+            (data.deleteCount === data.insert.length
+              // Only certain indexes that are replaced will be affected
+              ? index < data.start + data.insert.length
+              // All indexes after start will be affected
+              : true)) {
           triggerUpdate()
         }
       }

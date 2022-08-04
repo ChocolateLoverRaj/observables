@@ -1,5 +1,5 @@
 import RenderFn from './RenderFn'
-import { FC, useEffect, useRef } from 'react'
+import { FC, useRef } from 'react'
 import Observable from '../Observable'
 import diff from 'set-diffs'
 import useRerender from '@utilityjs/use-force-rerender'
@@ -14,14 +14,13 @@ const reactObserver = <P = {}>(renderFn: RenderFn<P>): FC<P> => (props) => {
   }, props)
 
   const { add, remove } = diff(previousObservablesRef.current, observables)
-  useEffect(() => {
-    add.forEach(({ addRemove: { add } }) => {
-      add(rerender)
-    })
-    remove.forEach(({ addRemove: { remove } }) => {
-      remove(rerender)
-    })
-  }, [add, remove, rerender])
+  add.forEach(({ addRemove: { add } }) => {
+    add(rerender)
+  })
+  remove.forEach(({ addRemove: { remove } }) => {
+    remove(rerender)
+  })
+  previousObservablesRef.current = observables
 
   return returnValue
 }

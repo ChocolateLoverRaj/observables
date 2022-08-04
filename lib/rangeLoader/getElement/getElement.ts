@@ -4,11 +4,10 @@ import getValue from '../../rangeMap/getValue/getValue'
 import Input from './Input'
 import getGapArrayElement from '../../gapArray/get/get'
 import PromiseDataDone from '../../observablePromise/PromiseDataDone'
-import never from 'never'
 
 const getElement = <T>(
   { rangeLoader: { loadPromises, loaded }, index }: Input<T>
-): ObservablePromise<T> =>
+): ObservablePromise<T | undefined> =>
     createComputedObservable(observe => {
       const observablePromise = observe(getValue({ rangeMap: loadPromises, index }))
       if (observablePromise !== undefined) {
@@ -18,7 +17,7 @@ const getElement = <T>(
             done: false,
             value: (async () => {
               await promiseData.value
-              return getGapArrayElement({ gapArray: loaded, index }).getValue() ?? never()
+              return getGapArrayElement({ gapArray: loaded, index }).getValue()
             })()
           }
         } else {
@@ -29,7 +28,7 @@ const getElement = <T>(
           done: true,
           value: {
             success: true,
-            result: observe(getGapArrayElement({ gapArray: loaded, index })) ?? never()
+            result: observe(getGapArrayElement({ gapArray: loaded, index }))
           }
         }
       }

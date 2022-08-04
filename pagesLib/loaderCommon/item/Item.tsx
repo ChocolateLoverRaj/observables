@@ -1,4 +1,4 @@
-import reactObserver from '../../../../lib/reactObserver/reactObserver'
+import reactObserver from '../../../lib/reactObserver/reactObserver'
 import PromiseDone from './promiseDone/PromiseDone'
 import Props from './Props'
 
