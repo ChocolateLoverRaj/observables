@@ -2,7 +2,7 @@ import { FC, useContext } from 'react'
 import getLength from '../../../lib/rangeLoader/getLength'
 import loadRange from '../../../lib/rangeLoader/loadRange/loadRange'
 import Props from './Props'
-import Context from '../Context'
+import Context from '../../loaderCommon/Context'
 
 const LoadMore: FC<Props> = ({ itemsPerBatch }) => {
   const rangeLoader = useContext(Context)

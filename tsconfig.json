@@ -8,6 +8,10 @@
     "downlevelIteration": true,
     "jsx": "preserve",
     "noEmit": true,
-    "strictBindCallApply": true
+    "strictBindCallApply": true,
+    "lib": [
+      "ES2022",
+      "DOM"
+    ]
   }
 }

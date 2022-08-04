@@ -1,3 +1,4 @@
+import never from 'never'
 import { FC } from 'react'
 import Error from './error/Error'
 import Props from './Props'
@@ -7,7 +8,7 @@ const PromiseDone: FC<Props> = ({ failableResult, index }) => {
   return (
     <>
       {failableResult.success
-        ? <Success loadedItem={failableResult.result} />
+        ? <Success loadedItem={failableResult.result ?? never()} index={index} />
         : <Error error={failableResult.result} index={index} />}
     </>
   )

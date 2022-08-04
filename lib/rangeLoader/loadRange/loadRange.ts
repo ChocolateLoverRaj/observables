@@ -21,6 +21,7 @@ const loadRange = <T>({ rangeLoader, range }: Input<T>): void => {
         remove({ rangeMap: rangeLoader.loadPromises, range })
         if (results.length < range.length) {
           setObservableValue(rangeLoader.ended, true)
+
           // Delete all promises/errors out of range
           remove({
             rangeMap: rangeLoader.loadPromises,
