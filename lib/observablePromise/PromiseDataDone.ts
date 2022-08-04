@@ -2,7 +2,7 @@ import FailableResult from '../failableResult/FailableResult'
 
 interface PromiseDataDone<T> {
   done: true
-  value: FailableResult<T>
+  result: FailableResult<T>
 }
 
 export default PromiseDataDone

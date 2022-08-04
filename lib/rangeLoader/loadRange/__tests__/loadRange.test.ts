@@ -14,7 +14,7 @@ test('no more results', async () => {
   })
   loadRange({ rangeLoader, range: { start: 3, length: 3 } })
   loadRange({ rangeLoader, range: { start: 0, length: 3 } })
-  await getElement({ rangeLoader, index: 0 }).getValue().value
+  await getElement({ rangeLoader, index: 0 }).getValue().result
   expect(getLength(rangeLoader).getValue()).toBe(2)
   expect(get(rangeLoader.ended)).toBe(true)
 })
