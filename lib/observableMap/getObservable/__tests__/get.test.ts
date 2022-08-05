@@ -4,13 +4,14 @@ import get from '../get'
 
 test('observable', () => {
   const observableMap = create<any, any>()
-  const observable = get({ observableMap, key: 'key' })
+  const observable = get({ data: observableMap, key: 'key' })
   const listener = jest.fn()
   observable.addRemove.add(listener)
   expect(observable.getValue()).toBeUndefined()
   set({
-    observableMap,
-    setData: { key: 'key', value: 'value' }
+    data: observableMap,
+    key: 'key',
+    value: 'value'
   })
   expect(listener).toBeCalled()
   expect(observable.getValue()).toBe('value')
