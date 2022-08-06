@@ -1,5 +1,6 @@
 enum EventType {
-  SET
+  SET,
+  REMOVE
 }
 
 export default EventType

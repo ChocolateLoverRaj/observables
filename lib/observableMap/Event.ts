@@ -3,6 +3,7 @@ import SetData from './SetData'
 
 interface Events<K, V> {
   [EventType.SET]: SetData<K, V>
+  [EventType.REMOVE]: K
 }
 
 type Event<K, V> = {
