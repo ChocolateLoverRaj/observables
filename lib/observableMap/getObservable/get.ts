@@ -12,7 +12,9 @@ const get = <K, V>(input: InputKey<ObservableMap<K, V>, K>): Observable<V | unde
     getValue: () => getNotObservable(input),
     getInternalObserve: triggerUpdate => {
       const listener: Listener<[Event<K, V>]> = ({ type, data }) => {
-        if (type === EventType.SET && data.key === input.key) {
+        if (
+          (type === EventType.SET && data.key === input.key) ||
+          (type === EventType.REMOVE && data === input.key)) {
           triggerUpdate()
         }
       }
