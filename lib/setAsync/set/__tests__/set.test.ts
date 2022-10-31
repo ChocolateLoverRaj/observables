@@ -73,3 +73,20 @@ test('queued function gets overwritten', async () => {
   expect(setFn0).toBeCalledTimes(1)
   expect(setFn1).toBeCalledTimes(1)
 })
+
+test('2 times', async () => {
+  const setAsync = create<any>()
+  const setFn0 = jest.fn(async () => {})
+  const setFn1 = jest.fn(async () => {})
+  set({
+    setAsync,
+    setFn: setFn0
+  })
+  await setFn0.mock.results[0].value
+  set({
+    setAsync,
+    setFn: setFn1
+  })
+  expect(setFn0).toBeCalled()
+  expect(setFn1).toBeCalled()
+})
