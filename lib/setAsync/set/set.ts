@@ -1,20 +1,24 @@
-import setObservableValue from '../../observableValue/set'
-import createFromPromise from '../../observablePromise/createFromPromise'
 import Input from './Input'
 import get from '../../observableValue/get'
+import handlePromise from '../../observablePromise/handlePromise'
+import setObservableValue from '../../observableValue/set'
 
 const set = <T>({ setAsync, setFn }: Input<T>): void => {
   const callQueued = (): void => {
     if (setAsync.queued !== undefined) {
       const setPromise = setAsync.queued()
       setPromise.finally(() => callQueued())
-      setObservableValue(setAsync.setting, createFromPromise(setPromise))
+      setObservableValue(setAsync.setting, {
+        done: false,
+        result: undefined
+      })
+      handlePromise(setAsync.setting, setPromise)
       setAsync.queued = undefined
     }
   }
 
   setAsync.queued = setFn
-  if (get(setAsync.setting) === undefined) {
+  if (get(setAsync.setting).done) {
     callQueued()
   }
 }

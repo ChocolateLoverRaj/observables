@@ -47,7 +47,6 @@ test('queue gets emptied', async () => {
     setAsync,
     setFn
   })
-  expect(setFn).toBeCalledTimes(2)
   await setFn.mock.results[0].value
   expect(setFn).toBeCalledTimes(3)
 })
@@ -89,4 +88,13 @@ test('2 times', async () => {
   })
   expect(setFn0).toBeCalled()
   expect(setFn1).toBeCalled()
+})
+
+test('current fn finishes before queued fn is called', () => {
+  const setAsync = create<any>()
+  // Will never resolve
+  const setFn = jest.fn(async () => await new Promise(() => {}))
+  set({ setAsync, setFn })
+  set({ setAsync, setFn })
+  expect(setFn).toBeCalledTimes(1)
 })

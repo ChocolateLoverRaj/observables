@@ -9,9 +9,7 @@ import SetAsync from './SetAsync'
 const getSetPromise = (setAsync: SetAsync<any>): ObservablePromise<void> =>
   createComputedObservable(observe => {
     const setPromise = observe(getObserve(setAsync.setting))
-    return setPromise !== undefined
-      ? observe(setPromise)
-      : { done: true, result: { result: undefined, success: true } }
+    return setPromise ?? { done: true, result: { result: undefined, success: true } }
   })
 
 export default getSetPromise
