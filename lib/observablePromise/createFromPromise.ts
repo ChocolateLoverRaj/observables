@@ -1,21 +1,11 @@
-import create from '../observableValue/create'
 import getObserve from '../observableValue/getObserve'
-import set from '../observableValue/set'
-import promiseThenOrCatch from '../promiseThenOrCatch/promiseThenOrCatch'
+import createPendingPromise from './createPendingPromise'
+import handlePromise from './handlePromise'
 import ObservablePromise from './ObservablePromise'
-import PromiseData from './PromiseData'
 
 const createFromPromise = <T>(promise: Promise<T>): ObservablePromise<T> => {
-  const observableValue = create<PromiseData<T>>({
-    done: false,
-    result: undefined
-  })
-  promiseThenOrCatch(promise, result => {
-    set(observableValue, {
-      done: true,
-      result
-    })
-  })
+  const observableValue = createPendingPromise<T>()
+  handlePromise(observableValue, promise)
   return getObserve(observableValue)
 }
 
