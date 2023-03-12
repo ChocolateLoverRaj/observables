@@ -11,7 +11,6 @@ const SetAsyncComponent = reactObserver(observe => {
   const [value, setValue] = useState('Default value')
   const savePromiseData = observe(getSetPromise(setAsync))
   const [savedValue, setSavedValue] = useState('Default value')
-  console.log(savedValue)
 
   return (
     <>
@@ -22,7 +21,6 @@ const SetAsyncComponent = reactObserver(observe => {
           set({
             setAsync,
             setFn: async () => {
-              console.log('new value', value)
               await wait(2000)
               setSavedValue(value)
             }

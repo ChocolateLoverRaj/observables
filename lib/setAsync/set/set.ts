@@ -7,12 +7,12 @@ const set = <T>({ setAsync, setFn }: Input<T>): void => {
   const callQueued = (): void => {
     if (setAsync.queued !== undefined) {
       const setPromise = setAsync.queued()
-      setPromise.finally(() => callQueued())
       setObservableValue(setAsync.setting, {
         done: false,
         result: undefined
       })
       handlePromise(setAsync.setting, setPromise)
+      setPromise.finally(() => callQueued())
       setAsync.queued = undefined
     }
   }
