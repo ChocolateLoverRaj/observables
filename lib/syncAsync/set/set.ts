@@ -8,7 +8,7 @@ const set = <T>({
     setAsync,
     save,
     settingData,
-    load
+    set
   }
 }: Input<T>): void => {
   setObservableValue(settingData, newData)
@@ -17,9 +17,10 @@ const set = <T>({
     setFn: async () => {
       console.log('save', newData)
       await save(newData)
+      set(newData)
+      // FIXME: Shouldn't use setAsync internal data
       if (setAsync.queued === undefined) {
-        console.log('Should set settingData to undefined', load.getValue().getValue().result)
-        // setObservableValue(settingData, undefined)
+        setObservableValue(settingData, undefined)
       }
       return newData
     }

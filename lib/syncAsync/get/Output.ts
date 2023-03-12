@@ -1,10 +1,9 @@
 import Observable from '../../Observable'
-import ObservablePromise from '../../observablePromise/ObservablePromise'
 import PromiseData from '../../observablePromise/PromiseData'
 
 type Output<T> = Observable<{
   data: T | undefined
-  loadPromise: ObservablePromise<T> | undefined
+  loadPromiseData: PromiseData<T>
   savePromise: PromiseData<void>
 }>
 

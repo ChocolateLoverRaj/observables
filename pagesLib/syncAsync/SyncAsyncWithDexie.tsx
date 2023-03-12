@@ -1,20 +1,11 @@
 import useConstant from 'use-constant'
 import reactObserver from '../../lib/reactObserver/reactObserver'
-import createSyncAsync from '../../lib/syncAsync/create/create'
 import getSyncAsync from '../../lib/syncAsync/get/get'
 import setSyncAsync from '../../lib/syncAsync/set/set'
-import createDexieObservable from './createDexieObservable'
-import db from './dexie'
+import createDexieSyncAsync from './createDexieSyncAsync'
 
 const SyncAsyncWithDexie = reactObserver(observe => {
-  const syncAsync = useConstant(() => {
-    return createSyncAsync({
-      load: createDexieObservable(),
-      save: async newData => {
-        await db.data.put(newData, '')
-      }
-    })
-  })
+  const syncAsync = useConstant(createDexieSyncAsync)
   const { data, savePromise } = observe(getSyncAsync(syncAsync))
 
   return (
@@ -27,7 +18,6 @@ const SyncAsyncWithDexie = reactObserver(observe => {
               <input
                 value={data}
                 onChange={({ target: { value } }) => {
-                  console.log('set', value)
                   setSyncAsync({ syncAsync, newData: value })
                 }}
               />

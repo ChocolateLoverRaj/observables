@@ -14,8 +14,8 @@ const get = <T>({
     const loadPromise = observe(load)
 
     return {
-      data: observe(getObserve(settingData)) ?? getSuccessResult(observe(loadPromise)),
-      loadPromise: savePromise.done ? loadPromise : undefined,
+      data: observe(getObserve(settingData)) ?? getSuccessResult(loadPromise),
+      loadPromiseData: loadPromise,
       savePromise
     }
   })
