@@ -5,7 +5,7 @@ import getLength from '../../getLength'
 import loadRange from '../loadRange'
 
 test('no more results', async () => {
-  const rangeLoader = create(async ({ start, length }) => {
+  const rangeLoader = create<string>(async ({ start }) => {
     if (start === 0) {
       return ['a', 'b']
     } else {
