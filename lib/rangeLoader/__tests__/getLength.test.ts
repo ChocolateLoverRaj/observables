@@ -3,7 +3,7 @@ import getLength from '../getLength'
 import loadRange from '../loadRange/loadRange'
 
 test('includes promises in length', () => {
-  const rangeLoader = create(async () => await new Promise(() => {}))
+  const rangeLoader = create<never>(async () => await new Promise(() => {}))
   const observable = getLength(rangeLoader)
   expect(observable.getValue()).toBe(0)
   const fn = jest.fn()
