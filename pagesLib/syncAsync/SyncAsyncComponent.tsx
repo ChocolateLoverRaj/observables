@@ -13,22 +13,25 @@ import setSyncAsync from '../../lib/syncAsync/set/set'
 
 const SyncAsyncComponent = reactObserver(observe => {
   const syncAsync = useConstant(() => {
-    const loadObservableValue = createObservableValue<ObservablePromise<string>>(createFromPromise((async () => {
-      await wait(2000)
-      return 'Broccolli'
-    })()))
+    const loadObservableValue = createObservableValue<ObservablePromise<string>>(
+      createFromPromise((async () => {
+        await wait(2000)
+        return 'Broccoli'
+      })()))
 
     return createSyncAsync({
       load: getObserve(loadObservableValue),
       save: async newData => {
         await wait(2000)
-        setObservableValue(loadObservableValue, getObserve(createObservableValue<PromiseDataDone<string>>({
-          done: true,
-          result: {
-            success: true,
-            result: newData
-          }
-        })))
+        setObservableValue(
+          loadObservableValue,
+          getObserve(createObservableValue<PromiseDataDone<string>>({
+            done: true,
+            result: {
+              success: true,
+              result: newData
+            }
+          })))
       }
     })
   })
@@ -36,24 +39,24 @@ const SyncAsyncComponent = reactObserver(observe => {
 
   return (
     <>
-    {data !== undefined
-      ? (
-        <>
-    <label>
-      Edit async data:
-      <input 
-        value={data}
-        onChange={({ target: { value }}) => {
-          setSyncAsync({syncAsync, newData: value})
-        }}
-      />
-    </label>
-    {savePromise.done
-      ? !savePromise.result.success && 'Error saving'
-      : 'Saving'}
-    </>
-      )
-      : <>Loading data</>}
+      {data !== undefined
+        ? (
+          <>
+            <label>
+              Edit async data:
+              <input
+                value={data}
+                onChange={({ target: { value } }) => {
+                  setSyncAsync({ syncAsync, newData: value })
+                }}
+              />
+            </label>
+            {savePromise.done
+              ? !savePromise.result.success && 'Error saving'
+              : 'Saving'}
+          </>
+          )
+        : <>Loading data</>}
     </>
   )
 })

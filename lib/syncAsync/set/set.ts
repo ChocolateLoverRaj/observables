@@ -7,17 +7,19 @@ const set = <T>({
   syncAsync: {
     setAsync,
     save,
-    settingData
+    settingData,
+    load
   }
 }: Input<T>): void => {
   setObservableValue(settingData, newData)
   setSetAsync({
     setAsync,
     setFn: async () => {
+      console.log('save', newData)
       await save(newData)
       if (setAsync.queued === undefined) {
-        console.log('Setting settingData to undefined after saving value:', newData)
-        setObservableValue(settingData, undefined)
+        console.log('Should set settingData to undefined', load.getValue().getValue().result)
+        // setObservableValue(settingData, undefined)
       }
       return newData
     }
