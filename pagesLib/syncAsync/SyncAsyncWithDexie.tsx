@@ -1,11 +1,12 @@
 import useConstant from 'use-constant'
+import createDexieSyncAsync from '../../lib/createDexieSyncAsync/createDexieSyncAsync'
 import reactObserver from '../../lib/reactObserver/reactObserver'
 import getSyncAsync from '../../lib/syncAsync/get/get'
 import setSyncAsync from '../../lib/syncAsync/set/set'
-import createDexieSyncAsync from './createDexieSyncAsync'
+import createDexieSyncAsyncInput from './createDexieSyncAsyncInput'
 
 const SyncAsyncWithDexie = reactObserver(observe => {
-  const syncAsync = useConstant(createDexieSyncAsync)
+  const syncAsync = useConstant(() => createDexieSyncAsync(createDexieSyncAsyncInput))
   const { data, savePromise } = observe(getSyncAsync(syncAsync))
 
   return (
