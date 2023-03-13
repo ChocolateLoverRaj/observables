@@ -1,22 +1,21 @@
 import { liveQuery, Subscription } from 'dexie'
-import never from 'never'
-import wrapGetObservable from '../../lib/wrapGetObservable/wrapGetObservable'
-import db from './dexie'
-import getObserve from '../../lib/observableValue/getObserve'
-import SyncAsync from '../../lib/syncAsync/SyncAsync'
-import createPendingPromise from '../../lib/observablePromise/createPendingPromise'
-import createSyncAsync from '../../lib/syncAsync/create/create'
-import set from '../../lib/observableValue/set'
-import get from '../../lib/observableValue/get'
+import wrapGetObservable from '../wrapGetObservable/wrapGetObservable'
+import getObserve from '../observableValue/getObserve'
+import SyncAsync from '../syncAsync/SyncAsync'
+import createPendingPromise from '../observablePromise/createPendingPromise'
+import createSyncAsync from '../syncAsync/create/create'
+import set from '../observableValue/set'
+import get from '../observableValue/get'
+import Input from './Input'
 
-const createDexieSyncAsync = (): SyncAsync<string> => {
-  const observableValue = createPendingPromise<string>()
+const createDexieSyncAsync = <T>({ save, load }: Input<T>): SyncAsync<T> => {
+  const observableValue = createPendingPromise<T>()
 
   return createSyncAsync({
     load: wrapGetObservable({
       getValue: () => get(observableValue),
       getInternalObserve: triggerUpdate => {
-        const dexieObservable = liveQuery(async () => await db.data.get('') ?? never())
+        const dexieObservable = liveQuery(load)
         let subscription: Subscription
         const internalObservable = getObserve(observableValue)
 
@@ -59,9 +58,7 @@ const createDexieSyncAsync = (): SyncAsync<string> => {
         }
       })
     },
-    save: async newData => {
-      await db.data.put(newData, '')
-    }
+    save
   })
 }
 
