@@ -1,5 +1,10 @@
-import { FC } from 'react'
+import { FC, ForwardedRef } from 'react'
 import Observe from './Observe'
-type RenderFn<P = {}> = (observe: Observe, props: P) => ReturnType<FC>
+
+type RenderFn<Props = {}, Ref = never> = (
+  observe: Observe,
+  props: Props,
+  ref: ForwardedRef<Ref>
+) => ReturnType<FC>
 
 export default RenderFn
