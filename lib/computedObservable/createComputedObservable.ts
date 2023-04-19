@@ -1,13 +1,25 @@
 import emit from '../emit/emit'
-import Get from '../Get'
 import Listener from '../Listener'
 import Observable from '../Observable'
 import Compute from './Compute'
+import diff from 'set-diffs'
 
 const createComputedObservable = <T>(compute: Compute<T>): Observable<T> => {
-  const gotValue = false
   const listeners = new Set<Listener<[]>>()
-  const dependOnObservables = new Set<Observable<any>>()
+  let dependOnObservables = new Set<Observable<any>>()
+
+  const updateDependOnObservables = (): void => {
+    const newDependOnObservables = new Set<Observable<any>>()
+    compute(observable => {
+      newDependOnObservables.add(observable)
+      return observable.getValue()
+    })
+    const { add, remove } = diff(dependOnObservables, newDependOnObservables)
+    add.forEach(({ addRemove: { add } }) => add(internalListener))
+    remove.forEach(({ addRemove: { remove } }) => remove(internalListener))
+    dependOnObservables = newDependOnObservables
+  }
+
   const internalListener: Listener<[]> = () => {
     emit({
       forEach: Set.prototype.forEach.bind(listeners),
@@ -15,42 +27,23 @@ const createComputedObservable = <T>(compute: Compute<T>): Observable<T> => {
     })
   }
 
-  const getValue: Get<T> = () => {
-    observeDependOnStop()
-    dependOnObservables.clear()
-    const value = compute(observable => {
-      dependOnObservables.add(observable)
-      return observable.getValue()
-    })
-    observeDependOnStart()
-    return value
-  }
-
-  const observeDependOnStart = (): void => {
-    dependOnObservables.forEach(({ addRemove: { add } }) => add(internalListener))
-  }
-  const observeDependOnStop = (): void => {
-    dependOnObservables.forEach(({ addRemove: { remove } }) => remove(internalListener))
-  }
-
   return {
     addRemove: {
       add: listener => {
         if (listeners.size === 0) {
-          // Know what to observe
-          if (!gotValue) getValue()
-          observeDependOnStart()
+          updateDependOnObservables()
         }
         listeners.add(listener)
       },
       remove: listener => {
         listeners.delete(listener)
         if (listeners.size === 0) {
-          observeDependOnStop()
+          dependOnObservables.forEach(({ addRemove: { remove } }) => remove(internalListener))
+          dependOnObservables.clear()
         }
       }
     },
-    getValue
+    getValue: () => compute(({ getValue }) => getValue())
   }
 }
 
